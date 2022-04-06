@@ -29,18 +29,18 @@ public class Task {
     private Date deadline;
     private Boolean isDone;
 
-    // @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // @JoinColumn(name = "project_id", nullable = false, updatable = false)
-    // @JsonIgnore
-    private Integer projectId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "projectId", nullable = false)
+    @JsonIgnore
+    private Project project;
 
-    public Task(Integer id, String title, String description, Date deadline, Boolean isDone, Integer projectId) {
+    public Task(Integer id, String title, String description, Date deadline, Boolean isDone, Project project) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.isDone = isDone;
-        this.projectId = projectId;
+        this.project = project;
     }
 
     public Task() {
@@ -87,12 +87,12 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public Integer getProjectId() {
-        return projectId;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @Override

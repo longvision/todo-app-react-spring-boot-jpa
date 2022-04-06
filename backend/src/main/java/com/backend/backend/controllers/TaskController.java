@@ -26,9 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
     private static Logger logger = Logger.getLogger(TaskController.class.getName());
     private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
 
-    public TaskController(TaskRepository taskRepository) {
+    public TaskController(TaskRepository taskRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
     }
 
     @GetMapping("/tasks")
@@ -39,15 +41,20 @@ public class TaskController {
 
     @PostMapping("/tasks")
     public ResponseEntity<MessageDetails> addTask(@RequestBody TaskInfo taskInfo) {
-        Task task = new Task(taskInfo.getId(), taskInfo.getTitle(), taskInfo.getDescription(), taskInfo.getDeadline(),
-                taskInfo.isDone(), taskInfo.getProjectId());
+
+        Project project = projectRepository.findById(taskInfo.getProjectId()).get();
+
+        Task task = new Task(taskInfo.getId(), taskInfo.getTitle(), taskInfo.getDescription(),
+                taskInfo.getDeadline(),
+                taskInfo.isDone(), project);
         taskRepository.save(task);
+
         MessageDetails msg = new MessageDetails("The new task was inserted successfully.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
     }
 
     @PutMapping("/task/{id}")
-    public ResponseEntity<MessageDetails> updateTask(@RequestBody Task task, @PathVariable("id") Integer id) {
+    public ResponseEntity<MessageDetails> updateTask(@RequestBody TaskInfo task, @PathVariable("id") Integer id) {
 
         if (taskRepository.findById(id).isEmpty()) {
             MessageDetails msg = new MessageDetails("The task does not exist.");
@@ -56,8 +63,9 @@ public class TaskController {
 
         Task oldTask = taskRepository.findById(id).get();
 
+        Project project = projectRepository.findById(task.getProjectId()).get();
         Task updatedTask = new Task(oldTask.getId(), task.getTitle(), task.getDescription(),
-                task.getDeadline(), task.getIsDone(), task.getProjectId());
+                task.getDeadline(), task.isDone(), project);
         taskRepository.save(updatedTask);
 
         MessageDetails msg = new MessageDetails("The task was updated successfully.");

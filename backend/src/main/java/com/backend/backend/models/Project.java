@@ -20,14 +20,16 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer projectId;
-    private String projectName;
+    private String name;
+    private String description;
 
-    // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // private Set<Task> tasks;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Task> tasks;
 
-    public Project(String projectName) {
-        this.projectName = projectName;
-        // this.tasks = new HashSet<Task>();
+    public Project(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.tasks = new HashSet<Task>();
     }
 
     public Project() {
@@ -41,20 +43,28 @@ public class Project {
         this.projectId = projectId;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    // public Set<Task> getTasks() {
-    // return tasks;
-    // }
+    public String getDescription() {
+        return description;
+    }
 
-    // public void setTasks(HashSet<Task> tasks) {
-    // this.tasks = tasks;
-    // }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(HashSet<Task> tasks) {
+        this.tasks = tasks;
+    }
 
 }

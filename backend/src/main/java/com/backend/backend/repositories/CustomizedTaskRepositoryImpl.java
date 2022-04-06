@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.backend.backend.dto.TaskInfo;
+import com.backend.backend.models.Project;
 import com.backend.backend.models.Task;
 
 public class CustomizedTaskRepositoryImpl implements CustomizedTaskRepository {
@@ -54,12 +55,13 @@ public class CustomizedTaskRepositoryImpl implements CustomizedTaskRepository {
         RowMapper<Task> rowMapper = (r, i) -> {
 
             Task task = new Task();
+            Project project = new Project();
             task.setId(r.getInt("id"));
             task.setDescription(r.getString("description"));
             task.setTitle(r.getString("title"));
             task.setDeadline(r.getDate("deadline"));
             task.setIsDone(r.getBoolean("is_done"));
-            task.setProjectId(r.getInt("project_id"));
+            task.setProject(project);
             return task;
         };
         return jdbc.query(sql, rowMapper, id.intValue());

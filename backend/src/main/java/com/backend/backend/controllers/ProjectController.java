@@ -3,6 +3,7 @@ package com.backend.backend.controllers;
 import java.util.List;
 
 import com.backend.backend.dto.MessageDetails;
+import com.backend.backend.dto.ProjectInfo;
 // import com.backend.backend.dto.ProjectInfo;
 import com.backend.backend.models.Project;
 import com.backend.backend.models.Task;
@@ -38,23 +39,26 @@ public class ProjectController {
     @PostMapping("/project")
     public ResponseEntity<MessageDetails> addProject(@RequestBody Project project) {
         projectRepository.save(project);
+
         MessageDetails msg = new MessageDetails("The new project was inserted successfully.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
     }
 
-    @PutMapping("/project/{id}")
-    public ResponseEntity<MessageDetails> updateProject(@RequestBody Project project, @PathVariable("id") Integer id) {
-        if (projectRepository.findById(id).isEmpty()) {
-            MessageDetails msg = new MessageDetails("The project does not exist.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
-        }
+    // @PutMapping("/project/{id}")
+    // public ResponseEntity<MessageDetails> updateProject(@RequestBody Project
+    // project, @PathVariable("id") Integer id) {
+    // if (projectRepository.findById(id).isEmpty()) {
+    // MessageDetails msg = new MessageDetails("The project does not exist.");
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+    // }
 
-        Project updatedProject = projectRepository.findById(id).get();
-        updatedProject.setProjectName(project.getProjectName());
-        projectRepository.save(updatedProject);
-        MessageDetails msg = new MessageDetails("The new project was updated successfully.");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
-    }
+    // Project updatedProject = projectRepository.findById(id).get();
+    // updatedProject.setProjectName(project.getProjectName());
+    // projectRepository.save(updatedProject);
+    // MessageDetails msg = new MessageDetails("The new project was updated
+    // successfully.");
+    // return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
+    // }
 
     @DeleteMapping("/project/{id}")
     public ResponseEntity<MessageDetails> removeTask(@PathVariable Integer id) {

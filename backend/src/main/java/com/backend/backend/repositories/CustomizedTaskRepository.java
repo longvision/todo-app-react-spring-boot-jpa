@@ -5,8 +5,7 @@ import java.util.*;
 import com.backend.backend.models.Task;
 
 interface CustomizedTaskRepository {
-    List<Task> findTaskList();
 
-    List<Task> findTasksByProjectId(Integer projectId);
+    List<Task> findTasksByProjectId(Integer id);
 
 }

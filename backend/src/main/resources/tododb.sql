@@ -2,8 +2,7 @@ DROP DATABASE IF EXISTS tododb;
 
 CREATE DATABASE tododb;
 
-USE tododb;
-
+/* USE tododb; */
 GRANT
 SELECT
 ,

@@ -14,7 +14,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { taskApi } from "../../__fake-api__/task-api";
+import { todoApi } from "../../__fake-api__/todo-api";
 import { TasksBrowseFilter } from "../../components/tasks/tasks-browse-filter";
 import { ProjectTasks } from "../../components/tasks/project-tasks";
 import { useMounted } from "../../hooks/use-mounted";
@@ -30,10 +30,10 @@ const Task: NextPage = () => {
   const isMounted = useMounted();
   const route = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
-
+  const [update, setUpdate] = useState(false);
   const getProjects = useCallback(async () => {
     try {
-      const data = await taskApi.getProjects();
+      const data = await todoApi.getProjects();
 
       if (isMounted()) {
         setProjects(data);
@@ -50,6 +50,9 @@ const Task: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+  useEffect(() => {
+    getProjects();
+  }, [getProjects, update]);
 
   return (
     <>
@@ -79,7 +82,7 @@ const Task: NextPage = () => {
               <Typography color="inherit" variant="h3">
                 Control your tasks
               </Typography>
-              <Typography color="neutral.500" sx={{ mt: 2 }} variant="body1">
+              <Typography color="neutral.200" sx={{ mt: 2 }} variant="body1">
                 Keep your day-to-day tasks organized
               </Typography>
               <Button
@@ -92,6 +95,17 @@ const Task: NextPage = () => {
                 }}
               >
                 New task
+              </Button>
+              <Button
+                color="primary"
+                size="large"
+                sx={{ mt: 3, ml: 3 }}
+                variant="contained"
+                onClick={() => {
+                  route.push("/tasks/projects/new");
+                }}
+              >
+                New project
               </Button>
             </Grid>
             <Grid
@@ -110,12 +124,12 @@ const Task: NextPage = () => {
               />
             </Grid>
           </Grid>
-          <Box sx={{ mt: 4 }}>
+          {/* <Box sx={{ mt: 4 }}>
             <TasksBrowseFilter />
-          </Box>
+          </Box> */}
           <div>
             {projects.map((project) => (
-              <Card key={project.id} sx={{ mt: 4 }}>
+              <Card key={project.projectId} sx={{ mt: 4 }}>
                 <CardContent>
                   <Box
                     sx={{
@@ -127,13 +141,9 @@ const Task: NextPage = () => {
                     }}
                   >
                     <div>
-                      <NextLink href="/dashboard/tasks/projects/1" passHref>
-                        <Link color="textPrimary" variant="h6">
-                          {project.projectName}
-                        </Link>
-                      </NextLink>
+                      <Typography variant="h5">{project.name}</Typography>
                       <Typography variant="body2">
-                        {project.projectDescription}
+                        {project.description}
                       </Typography>
                       <Box
                         sx={{
@@ -171,7 +181,11 @@ const Task: NextPage = () => {
                     </div>
                   </Box>
                   <Box sx={{ mt: 2 }}>
-                    <ProjectTasks tasks={project.tasks} />
+                    <ProjectTasks
+                      tasks={project.tasks}
+                      update={update}
+                      setUpdate={setUpdate}
+                    />
                   </Box>
                 </CardContent>
               </Card>

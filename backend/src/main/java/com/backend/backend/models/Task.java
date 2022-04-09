@@ -1,7 +1,8 @@
 package com.backend.backend.models;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,29 +23,58 @@ import com.fasterxml.jackson.annotation.*;
 @Table(name = "task")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String title;
     private String description;
     private Date deadline;
     private Boolean isDone;
+    private LocalDateTime publishedAt;
+    private String category;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "projectId", nullable = false)
+    @JoinColumn(name = "project_id", nullable = false)
     @JsonIgnore
     private Project project;
 
-    public Task(Integer id, String title, String description, Date deadline, Boolean isDone, Project project) {
+    public Task(Integer id, String title, String description, Date deadline, String category, Boolean isDone,
+            Project project) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.isDone = isDone;
         this.project = project;
+        this.publishedAt = LocalDateTime.now();
+        this.category = category;
     }
 
     public Task() {
 
+    }
+
+    public Boolean getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public LocalDateTime getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
     public Integer getId() {
@@ -79,14 +109,6 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public Boolean getIsDone() {
-        return isDone;
-    }
-
-    public void setIsDone(Boolean isDone) {
-        this.isDone = isDone;
-    }
-
     public Project getProject() {
         return project;
     }
@@ -95,12 +117,16 @@ public class Task {
         this.project = project;
     }
 
+    // @Override
+    // public int hashCode() {
+    // final int prime = 31;
+    // int result = 1;
+    // result = prime * result + ((id == null) ? 0 : id.hashCode());
+    // return result;
+    // }
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return getClass().hashCode();
     }
 
     @Override

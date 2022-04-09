@@ -2,15 +2,18 @@ package com.backend.backend.models;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,15 +21,17 @@ import javax.persistence.Table;
 @Table(name = "project")
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer projectId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Integer id;
     private String name;
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Task> tasks;
 
-    public Project(String name, String description) {
+    public Project(Integer id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.tasks = new HashSet<Task>();
@@ -36,11 +41,11 @@ public class Project {
     }
 
     public Integer getProjectId() {
-        return projectId;
+        return id;
     }
 
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
+    public void setProjectId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -63,8 +68,19 @@ public class Project {
         return tasks;
     }
 
-    public void setTasks(HashSet<Task> tasks) {
-        this.tasks = tasks;
+    public void setTasks(HashSet<Task> hashSet) {
+        this.tasks = (Set<Task>) hashSet;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+        task.setProject(this);
+
+    }
+
+    public void removeTask(Task task) {
+        tasks.remove(task);
+        task.setProject(null);
     }
 
 }

@@ -15,33 +15,12 @@ import {
   Typography,
 } from "@mui/material";
 import type { StepIconProps } from "@mui/material";
-import { TaskCategoryStep } from "../../components/tasks/task-category-step";
-import { TaskDetailsStep } from "../../components/tasks/task-details-step";
-import { TaskDescriptionStep } from "../../components/tasks/task-description-step";
-import { TaskProjectStep } from "../../components/tasks/task-project-step";
-import { Check as CheckIcon } from "../../icons/check";
+import { ProjectDefinitionStep } from "../../../components/projects/project-definition-step";
+import { Check as CheckIcon } from "../../../icons/check";
 import { todoApi } from "src/__fake-api__/todo-api";
 import NextLink from "next/link";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
-
-const typeOptions = [
-  {
-    description: "Tasks that I must accomplish urgently",
-    title: "Urgent",
-    value: "urgent",
-  },
-  {
-    description: "Planning a high priority task",
-    title: "High",
-    value: "high",
-  },
-  {
-    description: "A task that is not urgent",
-    title: "Low",
-    value: "low",
-  },
-];
 
 const StepIcon: FC<StepIconProps> = (props) => {
   const { active, completed, icon } = props;
@@ -65,25 +44,10 @@ const StepIcon: FC<StepIconProps> = (props) => {
   );
 };
 
-const TaskCreate: NextPage = () => {
+const ProjectCreate: NextPage = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [complete, setComplete] = useState<boolean>(false);
-  const [type, setType] = useState<string>(typeOptions[1].value);
-  const [title, setTitle] = useState<string>("");
-  const [endDate, setEndDate] = useState<any>(new Date("2022-01-11T12:41:50"));
-  const [content, setContent] = useState<string>("");
-  const [projectId, setProjectId] = useState<number>(0);
-  const [projects, setProjects] = useState<any[]>([]);
-
-  const getProjects = useCallback(async () => {
-    const projects = await todoApi.getProjects();
-    console.log(projects);
-    setProjects(projects);
-  }, []);
-
-  useEffect(() => {
-    getProjects();
-  }, []);
+  const [project, setProject] = useState<any>({ name: "", description: "" });
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -95,12 +59,9 @@ const TaskCreate: NextPage = () => {
 
   const handleComplete = async () => {
     try {
-      const res = await todoApi.createTask(
-        projectId,
-        type,
-        title,
-        content,
-        endDate
+      const res = await todoApi.createProject(
+        project.name,
+        project.description
       );
       console.log(res);
       toast.success(res.data.message);
@@ -109,55 +70,6 @@ const TaskCreate: NextPage = () => {
       toast.error(e.message);
     }
   };
-
-  const steps = [
-    {
-      label: "Project",
-      content: (
-        <TaskProjectStep
-          onNext={handleNext}
-          setProjectId={setProjectId}
-          projects={projects}
-          projectId={projectId}
-        />
-      ),
-    },
-    {
-      label: "Category",
-      content: (
-        <TaskCategoryStep
-          onBack={handleBack}
-          onNext={handleNext}
-          setType={setType}
-          typeOptions={typeOptions}
-          type={type}
-        />
-      ),
-    },
-    {
-      label: "Task Details",
-      content: (
-        <TaskDetailsStep
-          setTitle={setTitle}
-          onBack={handleBack}
-          onNext={handleNext}
-          setEndDate={setEndDate}
-          endDate={endDate}
-        />
-      ),
-    },
-    {
-      label: "Description",
-      content: (
-        <TaskDescriptionStep
-          onBack={handleBack}
-          onNext={handleComplete}
-          content={content}
-          setContent={setContent}
-        />
-      ),
-    },
-  ];
 
   return (
     <>
@@ -202,7 +114,7 @@ const TaskCreate: NextPage = () => {
           >
             <Box maxWidth="sm">
               <Typography sx={{ mb: 3 }} variant="h4">
-                Create Task
+                Create Project
               </Typography>
               {!complete ? (
                 <Stepper
@@ -216,27 +128,12 @@ const TaskCreate: NextPage = () => {
                     },
                   }}
                 >
-                  {steps.map((step, index) => (
-                    <Step key={step.label}>
-                      <StepLabel StepIconComponent={StepIcon}>
-                        <Typography sx={{ ml: 2 }} variant="overline">
-                          {step.label}
-                        </Typography>
-                      </StepLabel>
-                      <StepContent
-                        sx={{
-                          ml: "20px",
-                          borderLeftColor: "divider",
-                          borderLeftWidth: 2,
-                          ...(activeStep === index && {
-                            py: 4,
-                          }),
-                        }}
-                      >
-                        {step.content}
-                      </StepContent>
-                    </Step>
-                  ))}
+                  <ProjectDefinitionStep
+                    onBack={handleBack}
+                    onNext={handleComplete}
+                    setProject={setProject}
+                    project={project}
+                  />
                 </Stepper>
               ) : (
                 <div>
@@ -254,7 +151,7 @@ const TaskCreate: NextPage = () => {
                     All done!
                   </Typography>
                   <Typography color="textSecondary" variant="body2">
-                    Here’s a preview of your newly created task
+                    Here’s a preview of your newly created project
                   </Typography>
                   <Card
                     sx={{
@@ -269,21 +166,11 @@ const TaskCreate: NextPage = () => {
                     variant="outlined"
                   >
                     <div>
-                      <Typography variant="subtitle1">{title}</Typography>
-                      <Typography color="textSecondary" variant="caption">
-                        {content}{" "}
-                        <Typography color="inherit" noWrap variant="caption">
-                          • {format(endDate, "MMM d, yyyy")}
-                        </Typography>
+                      <Typography variant="subtitle1">
+                        {project.name}
                       </Typography>
-                    </div>
-                    <div>
-                      <Typography
-                        color="textSecondary"
-                        sx={{ mr: 2 }}
-                        variant="caption"
-                      >
-                        {type} priority
+                      <Typography color="textSecondary" variant="caption">
+                        {project.description}{" "}
                       </Typography>
                     </div>
                   </Card>
@@ -300,4 +187,4 @@ const TaskCreate: NextPage = () => {
   );
 };
 
-export default TaskCreate;
+export default ProjectCreate;

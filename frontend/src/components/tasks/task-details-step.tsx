@@ -18,36 +18,40 @@ import { ArrowRight as ArrowRightIcon } from "../../icons/arrow-right";
 interface TaskDetailsStepProps {
   onNext?: () => void;
   onBack?: () => void;
+  setEndDate: (date: string) => void;
+  endDate: any;
+  setTitle: (title: string) => void;
 }
 
 export const TaskDetailsStep: FC<TaskDetailsStepProps> = (props) => {
-  const { onBack, onNext, ...other } = props;
-  const [tag, setTag] = useState<string>("");
-  const [tagArray, setTagArray] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState<Date | null>(
-    new Date("2021-09-22T11:41:50")
-  );
-  const [endDate, setEndDate] = useState<Date | null>(
-    new Date("2022-01-11T12:41:50")
-  );
+  const { onBack, onNext, setTitle, setEndDate, endDate, ...other } = props;
+  // const [tag, setTag] = useState<string>("");
+  // const [tagArray, setTagArray] = useState<string[]>([]);
+  // const [startDate, setStartDate] = useState<Date | null>(
+  //   new Date("2021-09-22T11:41:50")
+  // );
+  // const [endDate, setEndDate] = useState<Date | null>(
+  //   new Date("2022-01-11T12:41:50")
+  // );
 
-  const handleStartDateChange = (newValue: Date | null): void => {
-    setStartDate(newValue);
-  };
+  // const handleStartDateChange = (newValue: Date | null): void => {
+  //   setStartDate(newValue);
+  // };
 
-  const handleEndDateChange = (newValue: Date | null): void => {
+  const handleEndDateChange = (newValue: any): void => {
     setEndDate(newValue);
   };
 
   return (
     <div {...other}>
-      <Typography variant="h6">What is the task about?</Typography>
+      <Typography variant="h6">What is the task title?</Typography>
       <Box sx={{ mt: 3 }}>
         <TextField
           fullWidth
           label="Task Title"
           name="taskTitle"
-          placeholder="e.g Salesforce Analyst"
+          placeholder="Task Title"
+          onChange={(e) => setTitle(e.target.value)}
         />
 
         <Typography sx={{ mt: 3 }} variant="subtitle1">

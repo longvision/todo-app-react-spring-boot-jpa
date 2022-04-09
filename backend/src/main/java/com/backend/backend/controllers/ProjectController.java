@@ -1,6 +1,8 @@
 package com.backend.backend.controllers;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.backend.backend.dto.MessageDetails;
 import com.backend.backend.dto.ProjectInfo;
@@ -12,6 +14,7 @@ import com.backend.backend.repositories.TaskRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 public class ProjectController {
 
@@ -38,12 +42,19 @@ public class ProjectController {
 
     @PostMapping("/project")
     public ResponseEntity<MessageDetails> addProject(@RequestBody Project project) {
+
         projectRepository.save(project);
 
         MessageDetails msg = new MessageDetails("The new project was inserted successfully.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
     }
 
+    @GetMapping("/project/{id}")
+    public Project getProjectWithTasks(@PathVariable("id") Integer id) {
+
+        Project project = projectRepository.findById(id).get();
+        return project;
+    }
     // @PutMapping("/project/{id}")
     // public ResponseEntity<MessageDetails> updateProject(@RequestBody Project
     // project, @PathVariable("id") Integer id) {
@@ -84,10 +95,6 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(msg);
         }
     }
-    // @GetMapping("/projects/names")
-    // public List<ProjectInfo> gProjectNames() {
-    // return projectRepository.findProjectList();
-    // }
 }
 
 // curl -i -X POST localhost:8080/projects -H 'Content-type:application/json'

@@ -1,18 +1,18 @@
 import { useState } from "react";
 import type { FC } from "react";
 import PropTypes from "prop-types";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { ArrowRight as ArrowRightIcon } from "../../icons/arrow-right";
-import { QuillEditor } from "../quill-editor";
 
 interface TaskDescriptionStepProps {
   onBack?: () => void;
   onNext?: () => void;
+  content?: string;
+  setContent: (content: string) => void;
 }
 
 export const TaskDescriptionStep: FC<TaskDescriptionStepProps> = (props) => {
-  const { onBack, onNext, ...other } = props;
-  const [content, setContent] = useState<string>("");
+  const { onBack, onNext, content, setContent, ...other } = props;
 
   const handleChange = (value: string): void => {
     setContent(value);
@@ -23,8 +23,8 @@ export const TaskDescriptionStep: FC<TaskDescriptionStepProps> = (props) => {
       <Typography variant="h6">
         How would you describe the task post?
       </Typography>
-      <QuillEditor
-        onChange={handleChange}
+      <TextField
+        onChange={(e) => handleChange(e.target.value)}
         placeholder="Write something"
         sx={{
           height: 400,

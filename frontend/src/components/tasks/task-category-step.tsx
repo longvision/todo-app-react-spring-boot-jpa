@@ -8,29 +8,14 @@ import { ArrowRight as ArrowRightIcon } from "../../icons/arrow-right";
 interface TaskCategoryStepProps {
   onNext?: () => void;
   onBack?: () => void;
+  setType: (type: string) => void;
+  typeOptions: { description: string; value: string; title: string }[];
+  type: string;
 }
 
-const typeOptions = [
-  {
-    description: "Tasks for the daily life",
-    title: "Daily Life",
-    value: "daily",
-  },
-  {
-    description: "A task that requires a quick response",
-    title: "Work",
-    value: "work",
-  },
-  {
-    description: "Planning a long-term project",
-    title: "Travel",
-    value: "travel",
-  },
-];
-
 export const TaskCategoryStep: FC<TaskCategoryStepProps> = (props) => {
-  const { onBack, onNext, ...other } = props;
-  const [type, setType] = useState<string>(typeOptions[1].value);
+  const { onBack, onNext, typeOptions, setType, type, ...other } = props;
+  // const [type, setType] = useState<string>(typeOptions[1].value);
 
   const handleChange = (newType: string): void => {
     setType(newType);
@@ -77,6 +62,9 @@ export const TaskCategoryStep: FC<TaskCategoryStepProps> = (props) => {
         variant="contained"
       >
         Continue
+      </Button>
+      <Button onClick={onBack} sx={{ ml: 2 }}>
+        Back
       </Button>
     </div>
   );

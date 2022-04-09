@@ -1,15 +1,18 @@
 package com.backend.backend.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class TaskInfo {
     private Integer id;
     private String description;
     private String title;
     private Date deadline;
-    private boolean isDone;
+    private Boolean isDone;
     private Integer projectId;
+    public LocalDateTime publishedAt;
+    private String category;
 
     public Integer getId() {
         return id;
@@ -17,6 +20,22 @@ public class TaskInfo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
+    }
+
+    public LocalDateTime getPublishedAt() {
+        return publishedAt;
     }
 
     public String getDescription() {
@@ -43,11 +62,11 @@ public class TaskInfo {
         this.deadline = deadline;
     }
 
-    public boolean isDone() {
+    public Boolean getIsDone() {
         return isDone;
     }
 
-    public void setDone(boolean b) {
+    public void setIsDone(Boolean b) {
         this.isDone = b;
     }
 

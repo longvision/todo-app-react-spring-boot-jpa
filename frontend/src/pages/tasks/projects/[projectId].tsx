@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { taskApi } from "../../../__fake-api__/task-api";
+import { todoApi } from "../../../__fake-api__/todo-api";
 import { ProjectOverview } from "../../../components/tasks/project-overview";
 import { ProjectReviews } from "../../../components/tasks/project-reviews";
 import { ProjectSummary } from "../../../components/tasks/project-summary";
@@ -44,7 +44,7 @@ const ProjectDetails: NextPage = () => {
 
   const getProject = useCallback(async () => {
     try {
-      const data = await taskApi.getProject();
+      const data = await todoApi.getProject();
 
       if (isMounted()) {
         setProject(data);

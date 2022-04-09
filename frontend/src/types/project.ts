@@ -7,9 +7,10 @@ export interface Member {
 }
 
 export interface Project {
-  id: string;
-  projectName?: string;
-  projectDescription?: string;
+  projectId: string;
+  name?: string;
+  description?: string;
+  tasks: Task[];
 }
 export interface Task {
   id: string;
@@ -19,7 +20,8 @@ export interface Task {
   deadline?: string;
   isDone?: boolean;
   projectId?: number;
-  publishedAt: number | Date;
+  publishedAt: string | number | Date;
+  category?: string;
 }
 
 export interface Review {
@@ -50,22 +52,22 @@ export interface Asset {
   size: string;
 }
 
-export interface Project {
-  id: string;
-  activities?: Activity[];
-  assets?: Asset[];
-  averageRating: number;
-  description?: string;
-  employees: string;
-  founders?: Member[];
-  images?: string[];
-  isVerified: boolean;
-  tasks: Task[];
-  locations?: string[];
-  logo?: string;
-  members?: Member[];
-  name: string;
-  reviews?: Review[];
-  shortDescription: string;
-  website?: string;
-}
+// export interface Project {
+//   id: string;
+//   activities?: Activity[];
+//   assets?: Asset[];
+//   averageRating: number;
+//   description?: string;
+//   employees: string;
+//   founders?: Member[];
+//   images?: string[];
+//   isVerified: boolean;
+//   tasks: Task[];
+//   locations?: string[];
+//   logo?: string;
+//   members?: Member[];
+//   name: string;
+//   reviews?: Review[];
+//   shortDescription: string;
+//   website?: string;
+// }

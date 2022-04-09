@@ -13,6 +13,7 @@ import com.backend.backend.repositories.ProjectRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 // @RequestMapping("/tasks")
 public class TaskController {
@@ -39,14 +41,15 @@ public class TaskController {
         return tasks;
     }
 
-    @PostMapping("/tasks")
+    @PostMapping("/task")
     public ResponseEntity<MessageDetails> addTask(@RequestBody TaskInfo taskInfo) {
 
         Project project = projectRepository.findById(taskInfo.getProjectId()).get();
 
         Task task = new Task(taskInfo.getId(), taskInfo.getTitle(), taskInfo.getDescription(),
                 taskInfo.getDeadline(),
-                taskInfo.isDone(), project);
+                taskInfo.getCategory(), false, project);
+        project.addTask(task);
         taskRepository.save(task);
 
         MessageDetails msg = new MessageDetails("The new task was inserted successfully.");
@@ -65,8 +68,29 @@ public class TaskController {
 
         Project project = projectRepository.findById(task.getProjectId()).get();
         Task updatedTask = new Task(oldTask.getId(), task.getTitle(), task.getDescription(),
-                task.getDeadline(), task.isDone(), project);
+                task.getDeadline(), task.getCategory(), task.getIsDone(), project);
         taskRepository.save(updatedTask);
+
+        MessageDetails msg = new MessageDetails("The task was updated successfully.");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
+    }
+
+    @PutMapping("/check-task/{id}")
+    public ResponseEntity<MessageDetails> checkTask(@PathVariable("id") Integer id) {
+
+        if (taskRepository.findById(id).isEmpty()) {
+            MessageDetails msg = new MessageDetails("The task does not exist.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+        }
+
+        Task oldTask = taskRepository.findById(id).get();
+
+        if (oldTask.getIsDone()) {
+            oldTask.setIsDone(false);
+        } else {
+            oldTask.setIsDone(true);
+        }
+        taskRepository.save(oldTask);
 
         MessageDetails msg = new MessageDetails("The task was updated successfully.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);

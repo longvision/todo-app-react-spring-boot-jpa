@@ -1,9 +1,12 @@
 package com.backend.backend.repositories;
 
+import java.sql.Date;
 import java.util.*;
 
 import com.backend.backend.models.Project;
+import com.backend.backend.models.Task;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -22,7 +25,7 @@ public class CustomizedProjectRepositoryImpl implements CustomizedProjectReposit
         List<Project> names = new ArrayList<>();
         for (Map<String, Object> row : rows) {
             Project pub = new Project();
-            pub.setProjectId((Integer) (row.get("projectId")));
+            pub.setProjectId((Integer) (row.get("project_id")));
             pub.setName((String) (row.get("name")));
             names.add(pub);
         }
@@ -31,22 +34,16 @@ public class CustomizedProjectRepositoryImpl implements CustomizedProjectReposit
     }
 
     public Project findByName(String name) {
-        String sql = "SELECT project_id, name FROM project WHERE name = ?";
+        String sql = "SELECT project_id, name, description FROM project WHERE name = ?";
 
         RowMapper<Project> rowMapper = (r, i) -> {
             Project pub = new Project();
-            pub.setProjectId((Integer) (r.getInt("projectId")));
+            pub.setProjectId((Integer) (r.getInt("project_id")));
             pub.setName((String) (r.getString("name")));
             return pub;
         };
 
         return jdbc.query(sql, rowMapper, name).get(0);
-    }
-
-    @Override
-    public List<Project> findAllProjects() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

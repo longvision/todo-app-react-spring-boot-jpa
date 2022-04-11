@@ -85,7 +85,7 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
           >
             <div>
               <Avatar
-                src={task.title}
+                src={task.person.imageUrl}
                 sx={{
                   backgroundColor: task.isDone ? "text.disabled" : "info.main",
                   mr: 2,

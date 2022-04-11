@@ -26,7 +26,7 @@ public class CustomizedPersonRepositoryImpl implements CustomizedPersonRepositor
             Person person = new Person();
             Project project = new Project();
             person.setId(r.getInt("id"));
-            person.setName(r.getString("name"));
+            person.setFullName(r.getString("name"));
             person.setImageUrl(r.getString("image_url"));
             person.setUsername(r.getString("username"));
             return person;
@@ -41,7 +41,7 @@ public class CustomizedPersonRepositoryImpl implements CustomizedPersonRepositor
 
             Person person = new Person();
             person.setId(r.getInt("id"));
-            person.setName(r.getString("name"));
+            person.setFullName(r.getString("name"));
             person.setImageUrl(r.getString("image_url"));
             person.setUsername(r.getString("username"));
             return person;

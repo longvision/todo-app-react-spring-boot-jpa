@@ -65,7 +65,7 @@ public class CustomizedTaskRepositoryImpl implements CustomizedTaskRepository {
         for (Map<String, Object> row : rows) {
             Person person = new Person();
             person.setId((Integer) row.get("person_id"));
-            person.setName((String) row.get("full_name"));
+            person.setFullName((String) row.get("full_name"));
             person.setUsername((String) row.get("username"));
             person.setImageUrl((String) row.get("image_url"));
             //

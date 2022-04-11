@@ -67,7 +67,7 @@ public class PersonController {
 
         Person oldPerson = personRepository.findById(id).get();
 
-        Person updatedPerson = new Person(oldPerson.getId(), person.getName(), person.getImageUrl(),
+        Person updatedPerson = new Person(oldPerson.getId(), person.getFullName(), person.getImageUrl(),
                 person.getUsername());
         personRepository.save(updatedPerson);
 

@@ -12,7 +12,15 @@ export interface Project {
   description?: string;
   tasks: Task[];
 }
+
+export interface Person {
+  id: number;
+  imageUrl: string;
+  username: string;
+  fullName: string;
+}
 export interface Task {
+  person: Person;
   id: string;
   title?: string;
   description?: string;

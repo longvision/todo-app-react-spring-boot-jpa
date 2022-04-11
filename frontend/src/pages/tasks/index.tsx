@@ -17,6 +17,8 @@ import {
 import { todoApi } from "../../__fake-api__/todo-api";
 import { TasksBrowseFilter } from "../../components/tasks/tasks-browse-filter";
 import { ProjectTasks } from "../../components/tasks/project-tasks";
+import { Trash as TrashIcon } from "../../icons/trash";
+import { ArrowNarrowRight as NextIcon } from "../../icons/arrow-narrow-right";
 import { useMounted } from "../../hooks/use-mounted";
 import { BadgeCheckOutlined as BadgeCheckOutlinedIcon } from "../../icons/badge-check-outlined";
 import { ChevronLeft as ChevronLeftIcon } from "../../icons/chevron-left";
@@ -25,6 +27,7 @@ import { Star as StarIcon } from "../../icons/star";
 import { Check as CheckIcon } from "../../icons/check";
 import type { Project } from "../../types/project";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const Task: NextPage = () => {
   const isMounted = useMounted();
@@ -54,10 +57,22 @@ const Task: NextPage = () => {
     getProjects();
   }, [getProjects, update]);
 
+  const handleDeleteProject = async (projectId: string) => {
+    try {
+      const res = await todoApi.deleteProject(projectId);
+      if (res.status === 202) {
+        toast.success(res.data.message);
+        setUpdate(!update);
+      }
+    } catch (err) {
+      toast.error("Can't delete yet. There are tasks associated with it.");
+    }
+  };
+
   return (
     <>
       <Head>
-        <title>Task: Task Browse | Todo App</title>
+        <title>Tasks | Todo App</title>
       </Head>
       <Box
         component="main"
@@ -134,6 +149,8 @@ const Task: NextPage = () => {
                   <Box
                     sx={{
                       display: "flex",
+                      alignItems: "stretch",
+                      justifyContent: "space-between",
                       flexDirection: {
                         xs: "column",
                         sm: "row",
@@ -141,10 +158,30 @@ const Task: NextPage = () => {
                     }}
                   >
                     <div>
-                      <Typography variant="h5">{project.name}</Typography>
-                      <Typography variant="body2">
-                        {project.description}
-                      </Typography>
+                      <div>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Typography variant="h5">{project.name}</Typography>
+                          <NextLink
+                            href={`/tasks/projects/${project.projectId}`}
+                            passHref
+                          >
+                            <IconButton color="inherit">
+                              <NextIcon fontSize="small" />
+                            </IconButton>
+                          </NextLink>
+                        </Box>
+                        <Typography variant="body2">
+                          {project.description}
+                        </Typography>
+                      </div>
+
                       <Box
                         sx={{
                           alignItems: "center",
@@ -179,6 +216,15 @@ const Task: NextPage = () => {
                         </Box>
                       </Box>
                     </div>
+                    <Box>
+                      <IconButton
+                        color="error"
+                        onClick={() => handleDeleteProject(project.projectId)}
+                        disabled={project.tasks.length > 0}
+                      >
+                        <TrashIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
                   </Box>
                   <Box sx={{ mt: 2 }}>
                     <ProjectTasks
@@ -191,22 +237,6 @@ const Task: NextPage = () => {
               </Card>
             ))}
           </div>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              mt: 4,
-              px: 3,
-              py: 2,
-            }}
-          >
-            <IconButton disabled>
-              <ChevronLeftIcon fontSize="small" />
-            </IconButton>
-            <IconButton>
-              <ChevronRightIcon fontSize="small" />
-            </IconButton>
-          </Box>
         </Container>
       </Box>
     </>

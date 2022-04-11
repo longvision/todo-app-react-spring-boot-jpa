@@ -57,6 +57,7 @@ export const ProjectDefinitionStep: FC<ProjectDefinitionStepProps> = (
           endIcon={<ArrowRightIcon fontSize="small" />}
           onClick={onNext}
           variant="contained"
+          disabled={!project.name}
         >
           Create Project
         </Button>

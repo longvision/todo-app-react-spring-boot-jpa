@@ -2,11 +2,22 @@ import { Fragment, useEffect, useState } from "react";
 import type { FC } from "react";
 import PropTypes from "prop-types";
 import { format, formatDistanceStrict, parseISO } from "date-fns";
-import { Box, Button, Card, Chip, Divider, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Chip,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import type { Task } from "../../types/project";
 import { todoApi } from "src/__fake-api__/todo-api";
 import toast from "react-hot-toast";
 
+import { Trash as TrashIcon } from "../../icons/trash";
+import { getInitials } from "src/utils/get-initials";
 interface ProjectTasksProps {
   tasks: Task[];
   update: boolean;
@@ -43,6 +54,16 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
     }
   };
 
+  const handleDeleteTask = async (taskId: string) => {
+    const res = await todoApi.deleteTask(taskId);
+    if (res.status === 202) {
+      toast.success(res.data.message);
+      setUpdate(!update);
+    } else {
+      toast.error(res.data.message);
+    }
+  };
+
   return (
     <Card variant="outlined" {...other}>
       {tasks.map((task, index) => (
@@ -62,6 +83,18 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
               textDecoration: task.isDone ? "line-through" : "none",
             }}
           >
+            <div>
+              <Avatar
+                src={task.title}
+                sx={{
+                  backgroundColor: task.isDone ? "text.disabled" : "info.main",
+                  mr: 2,
+                }}
+                variant="rounded"
+              >
+                {getInitials(task.title)}
+              </Avatar>
+            </div>
             <div>
               <Typography variant="subtitle1">{task.title}</Typography>
               <Typography color="textSecondary" variant="caption">
@@ -87,9 +120,18 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
                   addSuffix: true,
                 })}
               </Typography>
-              <Button onClick={() => handleCheck(task.id)}>
+              <Button
+                color={task.isDone ? "inherit" : "success"}
+                onClick={() => handleCheck(task.id)}
+              >
                 {task.isDone ? "Uncheck" : "Check"}
               </Button>
+              <IconButton
+                color="error"
+                onClick={() => handleDeleteTask(task.id)}
+              >
+                <TrashIcon fontSize="small" />
+              </IconButton>
             </div>
           </Box>
           {index !== tasks.length - 1 && <Divider />}

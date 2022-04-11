@@ -57,6 +57,8 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
             id="demo-simple-select-helper"
             value={projectId}
             label="Project"
+            disabled={projects.length === 0}
+            sx={{ width: 300 }}
             onChange={(e) => handleChange(e.target.value)}
           >
             {props.projects.map((item, index) => (
@@ -65,7 +67,13 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText>Project name and description</FormHelperText>
+          {projectId !== null ? (
+            <FormHelperText>Project name and description</FormHelperText>
+          ) : (
+            <Typography variant="caption" color="red">
+              Add a project first
+            </Typography>
+          )}
         </FormControl>
       </Box>
 
@@ -74,6 +82,7 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
           endIcon={<ArrowRightIcon fontSize="small" />}
           onClick={onNext}
           variant="contained"
+          disabled={projectId === null}
         >
           Continue
         </Button>

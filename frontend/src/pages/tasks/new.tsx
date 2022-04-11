@@ -72,7 +72,7 @@ const TaskCreate: NextPage = () => {
   const [title, setTitle] = useState<string>("");
   const [endDate, setEndDate] = useState<any>(new Date("2022-01-11T12:41:50"));
   const [content, setContent] = useState<string>("");
-  const [projectId, setProjectId] = useState<number>(0);
+  const [projectId, setProjectId] = useState<number>(null);
   const [projects, setProjects] = useState<any[]>([]);
 
   const getProjects = useCallback(async () => {
@@ -205,39 +205,44 @@ const TaskCreate: NextPage = () => {
                 Create Task
               </Typography>
               {!complete ? (
-                <Stepper
-                  activeStep={activeStep}
-                  orientation="vertical"
-                  sx={{
-                    "& .MuiStepConnector-line": {
-                      ml: 1,
-                      borderLeftColor: "divider",
-                      borderLeftWidth: 2,
-                    },
-                  }}
-                >
-                  {steps.map((step, index) => (
-                    <Step key={step.label}>
-                      <StepLabel StepIconComponent={StepIcon}>
-                        <Typography sx={{ ml: 2 }} variant="overline">
-                          {step.label}
-                        </Typography>
-                      </StepLabel>
-                      <StepContent
-                        sx={{
-                          ml: "20px",
-                          borderLeftColor: "divider",
-                          borderLeftWidth: 2,
-                          ...(activeStep === index && {
-                            py: 4,
-                          }),
-                        }}
-                      >
-                        {step.content}
-                      </StepContent>
-                    </Step>
-                  ))}
-                </Stepper>
+                <>
+                  <Stepper
+                    activeStep={activeStep}
+                    orientation="vertical"
+                    sx={{
+                      "& .MuiStepConnector-line": {
+                        ml: 1,
+                        borderLeftColor: "divider",
+                        borderLeftWidth: 2,
+                      },
+                    }}
+                  >
+                    {steps.map((step, index) => (
+                      <Step key={step.label}>
+                        <StepLabel StepIconComponent={StepIcon}>
+                          <Typography sx={{ ml: 2 }} variant="overline">
+                            {step.label}
+                          </Typography>
+                        </StepLabel>
+                        <StepContent
+                          sx={{
+                            ml: "20px",
+                            borderLeftColor: "divider",
+                            borderLeftWidth: 2,
+                            ...(activeStep === index && {
+                              py: 4,
+                            }),
+                          }}
+                        >
+                          {step.content}
+                        </StepContent>
+                      </Step>
+                    ))}
+                  </Stepper>
+                  <NextLink href="/tasks" passHref>
+                    <Button sx={{ ml: 2 }}>Back</Button>
+                  </NextLink>
+                </>
               ) : (
                 <div>
                   <Avatar

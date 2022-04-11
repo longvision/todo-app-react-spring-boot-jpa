@@ -9,25 +9,25 @@ class TodoApi {
     name: string | null,
     description: string | null
   ): Promise<any> {
-    api.defaults.headers.common["Content-Type"] = "application/json";
-    //console.log({ email, password });
-    const res = await api.post("/project", {
+    return await api.post("/project", {
       name,
       description,
     });
-    console.log(res);
-    return res;
   }
 
   async getProjects() {
-    api.defaults.headers.common["Content-Type"] = "application/json";
-    //console.log({ email, password });
     const res = await api.get("projects");
-    console.log(res);
     return res.data;
   }
 
-  async getProject() {}
+  async getProjectById(projectId: string | string[] | undefined): Promise<any> {
+    const res = await api.get(`project/${projectId}`);
+    return res.data;
+  }
+  async updateProject(project: Project | null): Promise<any> {
+    const res = await api.put(`project/${project.projectId}`, project);
+    return res.data;
+  }
 
   async createTask(
     projectId: number,
@@ -36,24 +36,24 @@ class TodoApi {
     description: string,
     deadline: any
   ): Promise<any> {
-    api.defaults.headers.common["Content-Type"] = "application/json";
-    //console.log({ email, password });
-    const res = await api.post("/task", {
+    return await api.post("/task", {
       projectId,
       category,
       title,
       description,
       deadline,
     });
-    console.log(res);
-    return res;
   }
   async checkTask(taskId: string): Promise<any> {
-    api.defaults.headers.common["Content-Type"] = "application/json";
-    //console.log({ email, password });
-    const res = await api.put(`/check-task/${taskId}`);
-    console.log(res);
-    return res;
+    return await api.put(`/check-task/${taskId}`);
+  }
+
+  async deleteTask(taskId: string): Promise<any> {
+    return await api.delete(`/task/${taskId}`);
+  }
+
+  async deleteProject(projectId: string): Promise<any> {
+    return await api.delete(`/project/${projectId}`);
   }
 }
 

@@ -55,21 +55,21 @@ public class ProjectController {
         Project project = projectRepository.findById(id).get();
         return project;
     }
-    // @PutMapping("/project/{id}")
-    // public ResponseEntity<MessageDetails> updateProject(@RequestBody Project
-    // project, @PathVariable("id") Integer id) {
-    // if (projectRepository.findById(id).isEmpty()) {
-    // MessageDetails msg = new MessageDetails("The project does not exist.");
-    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
-    // }
 
-    // Project updatedProject = projectRepository.findById(id).get();
-    // updatedProject.setProjectName(project.getProjectName());
-    // projectRepository.save(updatedProject);
-    // MessageDetails msg = new MessageDetails("The new project was updated
-    // successfully.");
-    // return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
-    // }
+    @PutMapping("/project/{id}")
+    public ResponseEntity<MessageDetails> updateProject(@RequestBody Project project, @PathVariable("id") Integer id) {
+        if (projectRepository.findById(id).isEmpty()) {
+            MessageDetails msg = new MessageDetails("The project does not exist.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+        }
+
+        Project updatedProject = projectRepository.findById(id).get();
+        updatedProject.setName(project.getName());
+        updatedProject.setDescription(project.getDescription());
+        projectRepository.save(updatedProject);
+        MessageDetails msg = new MessageDetails("The project was updated successfully.");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);
+    }
 
     @DeleteMapping("/project/{id}")
     public ResponseEntity<MessageDetails> removeTask(@PathVariable Integer id) {

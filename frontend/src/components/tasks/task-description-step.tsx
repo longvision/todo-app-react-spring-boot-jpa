@@ -26,6 +26,7 @@ export const TaskDescriptionStep: FC<TaskDescriptionStepProps> = (props) => {
       <TextField
         onChange={(e) => handleChange(e.target.value)}
         placeholder="Write something"
+        fullWidth
         sx={{
           height: 400,
           mt: 3,

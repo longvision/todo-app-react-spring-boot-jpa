@@ -2,6 +2,7 @@ package com.backend.backend.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.sql.Date;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.*;
@@ -32,13 +34,19 @@ public class Task {
     private LocalDateTime publishedAt;
     private String category;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id", nullable = false)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+
+    private Person person;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
     @JsonIgnore
     private Project project;
 
     public Task(Integer id, String title, String description, Date deadline, String category, Boolean isDone,
-            Project project) {
+            Project project, Person person) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -47,6 +55,7 @@ public class Task {
         this.project = project;
         this.publishedAt = LocalDateTime.now();
         this.category = category;
+        this.person = person;
     }
 
     public Task() {
@@ -115,6 +124,14 @@ public class Task {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     // @Override

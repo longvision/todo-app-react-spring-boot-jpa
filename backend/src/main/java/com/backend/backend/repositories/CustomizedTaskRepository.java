@@ -6,6 +6,6 @@ import com.backend.backend.models.Task;
 
 interface CustomizedTaskRepository {
 
-    List<Task> findTasksByProjectId(Integer id);
+    List<Task> findTasksByProjectId(Integer projectId);
 
 }

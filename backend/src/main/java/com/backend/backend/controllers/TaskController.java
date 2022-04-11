@@ -7,8 +7,10 @@ import java.util.logging.Logger;
 import com.backend.backend.dto.TaskInfo;
 import com.backend.backend.dto.MessageDetails;
 import com.backend.backend.models.Task;
+import com.backend.backend.models.Person;
 import com.backend.backend.models.Project;
 import com.backend.backend.repositories.TaskRepository;
+import com.backend.backend.repositories.PersonRepository;
 import com.backend.backend.repositories.ProjectRepository;
 
 import org.springframework.http.HttpStatus;
@@ -29,10 +31,13 @@ public class TaskController {
     private static Logger logger = Logger.getLogger(TaskController.class.getName());
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
+    private final PersonRepository personRepository;
 
-    public TaskController(TaskRepository taskRepository, ProjectRepository projectRepository) {
+    public TaskController(TaskRepository taskRepository, ProjectRepository projectRepository,
+            PersonRepository personRepository) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
+        this.personRepository = personRepository;
     }
 
     @GetMapping("/tasks")
@@ -45,10 +50,11 @@ public class TaskController {
     public ResponseEntity<MessageDetails> addTask(@RequestBody TaskInfo taskInfo) {
 
         Project project = projectRepository.findById(taskInfo.getProjectId()).get();
+        Person oldPerson = personRepository.findById(taskInfo.getPersonId()).get();
 
         Task task = new Task(taskInfo.getId(), taskInfo.getTitle(), taskInfo.getDescription(),
                 taskInfo.getDeadline(),
-                taskInfo.getCategory(), false, project);
+                taskInfo.getCategory(), false, project, oldPerson);
         project.addTask(task);
         taskRepository.save(task);
 
@@ -67,8 +73,9 @@ public class TaskController {
         Task oldTask = taskRepository.findById(id).get();
 
         Project project = projectRepository.findById(task.getProjectId()).get();
+        Person person = personRepository.findById(task.getPersonId()).get();
         Task updatedTask = new Task(oldTask.getId(), task.getTitle(), task.getDescription(),
-                task.getDeadline(), task.getCategory(), task.getIsDone(), project);
+                task.getDeadline(), task.getCategory(), task.getIsDone(), project, person);
         taskRepository.save(updatedTask);
 
         MessageDetails msg = new MessageDetails("The task was updated successfully.");

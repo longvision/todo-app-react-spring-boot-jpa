@@ -13,6 +13,7 @@ public class TaskInfo {
     private Integer projectId;
     public LocalDateTime publishedAt;
     private String category;
+    private Integer personId;
 
     public Integer getId() {
         return id;
@@ -76,6 +77,14 @@ public class TaskInfo {
 
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;
+    }
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
 }

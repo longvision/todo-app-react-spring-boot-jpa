@@ -89,10 +89,11 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
                 sx={{
                   backgroundColor: task.isDone ? "text.disabled" : "info.main",
                   mr: 2,
+                  borderRadius: "50%",
                 }}
                 variant="rounded"
               >
-                {getInitials(task.title)}
+                {getInitials(task.person.fullName)}
               </Avatar>
             </div>
             <div>

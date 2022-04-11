@@ -41,9 +41,6 @@ export const TaskDescriptionStep: FC<TaskDescriptionStepProps> = (props) => {
         >
           Create Task
         </Button>
-        <Button onClick={onBack} sx={{ ml: 2 }}>
-          Back
-        </Button>
       </Box>
     </div>
   );

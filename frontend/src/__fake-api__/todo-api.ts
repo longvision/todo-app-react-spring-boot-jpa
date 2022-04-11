@@ -19,12 +19,16 @@ class TodoApi {
     const res = await api.get("projects");
     return res.data;
   }
+  async getPeople() {
+    const res = await api.get("people");
+    return res.data;
+  }
 
-  async getProjectById(projectId: string | string[] | undefined): Promise<any> {
+  async getProjectById(projectId: number): Promise<any> {
     const res = await api.get(`project/${projectId}`);
     return res.data;
   }
-  async updateProject(project: Project | null): Promise<any> {
+  async updateProject(project: Project): Promise<any> {
     const res = await api.put(`project/${project.projectId}`, project);
     return res.data;
   }
@@ -34,7 +38,8 @@ class TodoApi {
     category: string,
     title: string,
     description: string,
-    deadline: any
+    deadline: any,
+    personId: number
   ): Promise<any> {
     return await api.post("/task", {
       projectId,
@@ -42,17 +47,18 @@ class TodoApi {
       title,
       description,
       deadline,
+      personId,
     });
   }
-  async checkTask(taskId: string): Promise<any> {
+  async checkTask(taskId: number): Promise<any> {
     return await api.put(`/check-task/${taskId}`);
   }
 
-  async deleteTask(taskId: string): Promise<any> {
+  async deleteTask(taskId: number): Promise<any> {
     return await api.delete(`/task/${taskId}`);
   }
 
-  async deleteProject(projectId: string): Promise<any> {
+  async deleteProject(projectId: number): Promise<any> {
     return await api.delete(`/project/${projectId}`);
   }
 }

@@ -2,6 +2,7 @@ import { Dispatch, useEffect, useState } from "react";
 import type { FC } from "react";
 import PropTypes from "prop-types";
 import {
+  Avatar,
   Box,
   Button,
   Chip,
@@ -19,17 +20,29 @@ import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import { ArrowRight as ArrowRightIcon } from "../../icons/arrow-right";
 import { ProjectSummary } from "./project-summary";
 import { Project } from "src/types/project";
+import { getInitials } from "src/utils/get-initials";
 
 interface TaskDetailsStepProps {
   onNext?: () => void;
-
-  setProjectId?: ((projectId: number) => void) | undefined;
+  setProjectId?: (projectId: number) => void;
   projectId: number;
   projects: Project[];
+  setPersonId: (personId: number) => void;
+  personId: number;
+  people: any[];
 }
 
 export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
-  const { onNext, setProjectId, projectId, projects, ...other } = props;
+  const {
+    onNext,
+    setProjectId,
+    projectId,
+    projects,
+    setPersonId,
+    personId,
+    people,
+    ...other
+  } = props;
   // const [tag, setTag] = useState<string>("");
   // const [tagArray, setTagArray] = useState<string[]>([]);
   // const [startDate, setStartDate] = useState<Date | null>(
@@ -43,23 +56,26 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
   //   setStartDate(newValue);
   // };
 
-  const handleChange = (value: any) => {
+  const handleChangeProject = (value: any) => {
     setProjectId(value);
+  };
+  const handleChangePerson = (value: any) => {
+    setPersonId(value);
   };
 
   return (
     <div {...other}>
       <Box sx={{ ml: 2 }}>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-helper-label">Project</InputLabel>
+          <InputLabel htmlFor="project-id">Project</InputLabel>
           <Select
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
+            labelId="project"
+            id="project-selector"
             value={projectId}
             label="Project"
             disabled={projects.length === 0}
             sx={{ width: 300 }}
-            onChange={(e) => handleChange(e.target.value)}
+            onChange={(e) => handleChangeProject(e.target.value)}
           >
             {props.projects.map((item, index) => (
               <MenuItem key={index} value={item.projectId}>
@@ -72,6 +88,43 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
           ) : (
             <Typography variant="caption" color="red">
               Add a project first
+            </Typography>
+          )}
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 120, mt: 2 }}>
+          <InputLabel htmlFor="person-id">Person</InputLabel>
+          <Select
+            labelId="person"
+            id="person-selector"
+            value={personId}
+            label="Person"
+            disabled={people.length === 0}
+            sx={{ width: 300 }}
+            onChange={(e) => handleChangePerson(e.target.value)}
+          >
+            {props.people.map((item, index) => (
+              <MenuItem key={index} value={item.id}>
+                <div>
+                  <Avatar
+                    src={item.imageUrl}
+                    sx={{
+                      mr: 2,
+                      borderRadius: "50%",
+                    }}
+                    variant="rounded"
+                  >
+                    {getInitials(item.fullName)}
+                  </Avatar>
+                </div>
+                <Typography variant="subtitle1">{item.username}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
+          {projectId !== null ? (
+            <FormHelperText>Person name </FormHelperText>
+          ) : (
+            <Typography variant="caption" color="red">
+              Add a person first
             </Typography>
           )}
         </FormControl>

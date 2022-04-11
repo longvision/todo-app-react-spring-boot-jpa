@@ -72,17 +72,25 @@ const TaskCreate: NextPage = () => {
   const [title, setTitle] = useState<string>("");
   const [endDate, setEndDate] = useState<any>(new Date("2022-01-11T12:41:50"));
   const [content, setContent] = useState<string>("");
-  const [projectId, setProjectId] = useState<number>(null);
+  const [projectId, setProjectId] = useState<number | null>(null);
+  const [personId, setPersonId] = useState<number | null>(null);
   const [projects, setProjects] = useState<any[]>([]);
+  const [people, setPeople] = useState<any[]>([]);
 
   const getProjects = useCallback(async () => {
     const projects = await todoApi.getProjects();
     console.log(projects);
     setProjects(projects);
   }, []);
+  const getPeople = useCallback(async () => {
+    const people = await todoApi.getPeople();
+    console.log(people);
+    setPeople(people);
+  }, []);
 
   useEffect(() => {
     getProjects();
+    getPeople();
   }, []);
 
   const handleNext = () => {
@@ -100,7 +108,8 @@ const TaskCreate: NextPage = () => {
         type,
         title,
         content,
-        endDate
+        endDate,
+        personId
       );
       console.log(res);
       toast.success(res.data.message);
@@ -119,6 +128,9 @@ const TaskCreate: NextPage = () => {
           setProjectId={setProjectId}
           projects={projects}
           projectId={projectId}
+          setPersonId={setPersonId}
+          people={people}
+          personId={personId}
         />
       ),
     },

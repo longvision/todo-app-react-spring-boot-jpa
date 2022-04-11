@@ -121,7 +121,7 @@ public class TaskController {
 
         Task task = taskRepository.findById(id).get();
         // Get the project object
-
+        task.removeUser(task.getPerson());
         taskRepository.deleteById(task.getId());
         MessageDetails msg = new MessageDetails("The task was removed successfully.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(msg);

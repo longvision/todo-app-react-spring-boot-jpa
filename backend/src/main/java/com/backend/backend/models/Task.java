@@ -134,6 +134,10 @@ public class Task {
         this.person = person;
     }
 
+    public void removeUser(Person person) {
+        this.person = null;
+    }
+
     // @Override
     // public int hashCode() {
     // final int prime = 31;

@@ -49,9 +49,17 @@ public class TaskController {
     @PostMapping("/task")
     public ResponseEntity<MessageDetails> addTask(@RequestBody TaskInfo taskInfo) {
 
+        if (personRepository.findById(taskInfo.getPersonId()).isEmpty()) {
+            MessageDetails msg = new MessageDetails("The person does not exist.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+        }
+        if (projectRepository.findById(taskInfo.getProjectId()).isEmpty()) {
+            MessageDetails msg = new MessageDetails("The project does not exist.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+        }
+
         Project project = projectRepository.findById(taskInfo.getProjectId()).get();
         Person oldPerson = personRepository.findById(taskInfo.getPersonId()).get();
-
         Task task = new Task(taskInfo.getId(), taskInfo.getTitle(), taskInfo.getDescription(),
                 taskInfo.getDeadline(),
                 taskInfo.getCategory(), false, project, oldPerson);

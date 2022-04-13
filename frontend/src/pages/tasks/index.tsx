@@ -57,7 +57,7 @@ const Task: NextPage = () => {
     getProjects();
   }, [getProjects, update]);
 
-  const handleDeleteProject = async (projectId: string) => {
+  const handleDeleteProject = async (projectId: number) => {
     try {
       const res = await todoApi.deleteProject(projectId);
       if (res.status === 202) {
@@ -133,10 +133,10 @@ const Task: NextPage = () => {
                 },
               }}
             >
-              <img
+              {/* <img
                 alt=""
                 src="/static/mock-images/tasks/task_browse_header.svg"
-              />
+              /> */}
             </Grid>
           </Grid>
           {/* <Box sx={{ mt: 4 }}>

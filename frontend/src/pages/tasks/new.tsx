@@ -72,8 +72,8 @@ const TaskCreate: NextPage = () => {
   const [title, setTitle] = useState<string>("");
   const [endDate, setEndDate] = useState<any>(new Date("2022-01-11T12:41:50"));
   const [content, setContent] = useState<string>("");
-  const [projectId, setProjectId] = useState<number | null>(null);
-  const [personId, setPersonId] = useState<number | null>(null);
+  const [projectId, setProjectId] = useState<string>("");
+  const [personId, setPersonId] = useState<string>("");
   const [projects, setProjects] = useState<any[]>([]);
   const [people, setPeople] = useState<any[]>([]);
 

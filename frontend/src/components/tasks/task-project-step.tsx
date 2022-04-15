@@ -24,11 +24,11 @@ import { getInitials } from "src/utils/get-initials";
 
 interface TaskDetailsStepProps {
   onNext?: () => void;
-  setProjectId?: (projectId: number) => void;
-  projectId: number;
+  setProjectId?: (projectId: string) => void;
+  projectId: string;
   projects: Project[];
-  setPersonId: (personId: number) => void;
-  personId: number;
+  setPersonId: (personId: string) => void;
+  personId: string;
   people: any[];
 }
 
@@ -56,10 +56,10 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
   //   setStartDate(newValue);
   // };
 
-  const handleChangeProject = (value: any) => {
+  const handleChangeProject = (value: string) => {
     setProjectId(value);
   };
-  const handleChangePerson = (value: any) => {
+  const handleChangePerson = (value: string) => {
     setPersonId(value);
   };
 
@@ -78,7 +78,7 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
             onChange={(e) => handleChangeProject(e.target.value)}
           >
             {props.projects.map((item, index) => (
-              <MenuItem key={index} value={item.projectId}>
+              <MenuItem key={index} value={item.projectId || ""}>
                 {item.name} - {item.description}
               </MenuItem>
             ))}
@@ -103,7 +103,7 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
             onChange={(e) => handleChangePerson(e.target.value)}
           >
             {props.people.map((item, index) => (
-              <MenuItem key={index} value={item.id}>
+              <MenuItem key={index} value={item.id || ""}>
                 <div>
                   <Avatar
                     src={item.imageUrl}

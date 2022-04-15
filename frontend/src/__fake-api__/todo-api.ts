@@ -1,4 +1,5 @@
 import { subDays, subHours, subMinutes, subSeconds } from "date-fns";
+import { string } from "prop-types";
 import type { Project } from "../types/project";
 import { api } from "./api";
 
@@ -12,6 +13,13 @@ class TodoApi {
     return await api.post("/project", {
       name,
       description,
+    });
+  }
+  async createPerson(fullName: string, username: string): Promise<any> {
+    return await api.post("/person", {
+      fullName,
+      imageUrl: "https://i.pravatar.cc/300",
+      username,
     });
   }
 
@@ -34,12 +42,12 @@ class TodoApi {
   }
 
   async createTask(
-    projectId: number,
+    projectId: string,
     category: string,
     title: string,
     description: string,
     deadline: any,
-    personId: number
+    personId: string
   ): Promise<any> {
     return await api.post("/task", {
       projectId,
@@ -50,15 +58,15 @@ class TodoApi {
       personId,
     });
   }
-  async checkTask(taskId: number): Promise<any> {
+  async checkTask(taskId: string): Promise<any> {
     return await api.put(`/check-task/${taskId}`);
   }
 
-  async deleteTask(taskId: number): Promise<any> {
+  async deleteTask(taskId: string): Promise<any> {
     return await api.delete(`/task/${taskId}`);
   }
 
-  async deleteProject(projectId: number): Promise<any> {
+  async deleteProject(projectId: string): Promise<any> {
     return await api.delete(`/project/${projectId}`);
   }
 }

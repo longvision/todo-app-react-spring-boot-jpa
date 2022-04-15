@@ -83,9 +83,9 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
               textDecoration: task.isDone ? "line-through" : "none",
             }}
           >
-            <div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
               <Avatar
-                src={task.person.imageUrl}
+                src={!task.isDone && task.person.imageUrl}
                 sx={{
                   backgroundColor: task.isDone ? "text.disabled" : "info.main",
                   mr: 2,
@@ -95,6 +95,14 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
               >
                 {getInitials(task.person.fullName)}
               </Avatar>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <Typography variant="caption">
+                  {task.person.fullName}
+                </Typography>
+                <Typography variant="caption">
+                  <strong>{task.person.username.toLowerCase()}</strong>
+                </Typography>
+              </div>
             </div>
             <div>
               <Typography variant="subtitle1">{task.title}</Typography>

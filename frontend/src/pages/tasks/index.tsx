@@ -57,7 +57,7 @@ const Task: NextPage = () => {
     getProjects();
   }, [getProjects, update]);
 
-  const handleDeleteProject = async (projectId: number) => {
+  const handleDeleteProject = async (projectId: string) => {
     try {
       const res = await todoApi.deleteProject(projectId);
       if (res.status === 202) {
@@ -121,6 +121,17 @@ const Task: NextPage = () => {
                 }}
               >
                 New project
+              </Button>
+              <Button
+                color="primary"
+                size="large"
+                sx={{ mt: 3, ml: 3 }}
+                variant="contained"
+                onClick={() => {
+                  route.push("/tasks/person/new");
+                }}
+              >
+                New person
               </Button>
             </Grid>
             <Grid

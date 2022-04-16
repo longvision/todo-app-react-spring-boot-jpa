@@ -83,13 +83,15 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
               </MenuItem>
             ))}
           </Select>
-          {projectId !== null ? (
-            <FormHelperText>Project name and description</FormHelperText>
-          ) : (
-            <Typography variant="caption" color="red">
-              Add a project first
-            </Typography>
-          )}
+          <Box sx={{ mt: 2 }}>
+            {projects.length ? (
+              <FormHelperText>Project name and description</FormHelperText>
+            ) : (
+              <Typography variant="caption" color="red">
+                Add a project first
+              </Typography>
+            )}
+          </Box>
         </FormControl>
         <FormControl sx={{ m: 1, minWidth: 120, mt: 2 }}>
           <InputLabel htmlFor="person-id">Person</InputLabel>
@@ -120,25 +122,29 @@ export const TaskProjectStep: FC<TaskDetailsStepProps> = (props) => {
               </MenuItem>
             ))}
           </Select>
-          {projectId !== null ? (
-            <FormHelperText>Person name </FormHelperText>
-          ) : (
-            <Typography variant="caption" color="red">
-              Add a person first
-            </Typography>
-          )}
+          <Box sx={{ mt: 2 }}>
+            {people.length ? (
+              <FormHelperText>Person name </FormHelperText>
+            ) : (
+              <Typography variant="caption" color="red">
+                Add a person first
+              </Typography>
+            )}
+          </Box>
         </FormControl>
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Button
-          endIcon={<ArrowRightIcon fontSize="small" />}
-          onClick={onNext}
-          variant="contained"
-          disabled={projectId === null}
-        >
-          Continue
-        </Button>
+        {projectId && personId && (
+          <Button
+            endIcon={<ArrowRightIcon fontSize="small" />}
+            onClick={onNext}
+            variant="contained"
+            disabled={projectId === null}
+          >
+            Continue
+          </Button>
+        )}
       </Box>
     </div>
   );

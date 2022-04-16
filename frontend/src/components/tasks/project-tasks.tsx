@@ -31,9 +31,7 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
     try {
       const res = await todoApi.checkTask(taskId);
       if (res.status === 202) {
-        toast.success(
-          update ? "Task checked as done." : "Task checked as pending."
-        );
+        toast.success("Task checked");
         setUpdate(!update);
       }
     } catch (e) {
@@ -85,7 +83,7 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
           >
             <div style={{ display: "flex", flexDirection: "row" }}>
               <Avatar
-                src={!task.isDone && task.person.imageUrl}
+                src={!task.isDone ? task.person.imageUrl : ""}
                 sx={{
                   backgroundColor: task.isDone ? "text.disabled" : "info.main",
                   mr: 2,
@@ -131,6 +129,7 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
               </Typography>
               <Button
                 color={task.isDone ? "inherit" : "success"}
+                sx={{ textDecoration: "none" }}
                 onClick={() => handleCheck(task.id)}
               >
                 {task.isDone ? "Uncheck" : "Check"}

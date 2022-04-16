@@ -18,7 +18,7 @@ import { todoApi } from "../../__fake-api__/todo-api";
 import { TasksBrowseFilter } from "../../components/tasks/tasks-browse-filter";
 import { ProjectTasks } from "../../components/tasks/project-tasks";
 import { Trash as TrashIcon } from "../../icons/trash";
-import { ArrowNarrowRight as NextIcon } from "../../icons/arrow-narrow-right";
+import { PencilAlt as PencilIcon } from "../../icons/pencil-alt";
 import { useMounted } from "../../hooks/use-mounted";
 import { BadgeCheckOutlined as BadgeCheckOutlinedIcon } from "../../icons/badge-check-outlined";
 import { ChevronLeft as ChevronLeftIcon } from "../../icons/chevron-left";
@@ -179,14 +179,6 @@ const Task: NextPage = () => {
                           }}
                         >
                           <Typography variant="h5">{project.name}</Typography>
-                          <NextLink
-                            href={`/tasks/projects/${project.projectId}`}
-                            passHref
-                          >
-                            <IconButton color="inherit">
-                              <NextIcon fontSize="small" />
-                            </IconButton>
-                          </NextLink>
                         </Box>
                         <Typography variant="body2">
                           {project.description}
@@ -228,6 +220,14 @@ const Task: NextPage = () => {
                       </Box>
                     </div>
                     <Box>
+                      <NextLink
+                        href={`/tasks/projects/${project.projectId}`}
+                        passHref
+                      >
+                        <IconButton color="inherit">
+                          <PencilIcon fontSize="small" />
+                        </IconButton>
+                      </NextLink>
                       <IconButton
                         color="error"
                         onClick={() => handleDeleteProject(project.projectId)}

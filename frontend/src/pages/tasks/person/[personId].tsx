@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { todoApi } from "../../../__fake-api__/todo-api";
+import { todoApi } from "../../../api/todo-api";
 import { ProjectOverview } from "../../../components/tasks/project-overview";
 import { Pencil as EditIcon } from "../../../icons/pencil";
 import { CheckCircleOutlined as SaveIcon } from "../../../icons/check-circle-outlined";

@@ -8,9 +8,21 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
+    "find:unused": "next-unused",
     "build-export": "next build && next export",
     "lint": "next lint",
     "lint-fix": "next lint --fix"
+  },
+  "next-unused": {
+    "alias": {},
+    "include": [
+      "src/components"
+    ],
+    "exclude": [],
+    "entrypoints": [
+      "src/pages/_app.tsx"
+    ],
+    "debug": true
   },
   "browserslist": {
     "production": [
@@ -59,6 +71,7 @@
     "draft-js": "^0.11.7",
     "firebase": "^9.6.6",
     "formik": "^2.2.9",
+    "globby": "^13.1.1",
     "gray-matter": "^4.0.3",
     "i18next": "^21.6.10",
     "iconv-lite": "^0.6.3",

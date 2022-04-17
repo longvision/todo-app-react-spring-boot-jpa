@@ -17,7 +17,7 @@ import {
 import type { StepIconProps } from "@mui/material";
 import { ProjectDefinitionStep } from "../../../components/projects/project-definition-step";
 import { Check as CheckIcon } from "../../../icons/check";
-import { todoApi } from "src/__fake-api__/todo-api";
+import { todoApi } from "src/api/todo-api";
 import NextLink from "next/link";
 import toast from "react-hot-toast";
 import { format } from "date-fns";

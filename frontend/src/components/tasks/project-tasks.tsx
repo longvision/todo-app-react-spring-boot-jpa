@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import type { Task } from "../../types/project";
-import { todoApi } from "src/__fake-api__/todo-api";
+import { todoApi } from "src/api/todo-api";
 import toast from "react-hot-toast";
 
 import { Trash as TrashIcon } from "../../icons/trash";

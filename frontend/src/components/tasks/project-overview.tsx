@@ -38,7 +38,7 @@ export const ProjectOverview: FC<ProjectOverviewProps> = (props) => {
 
   return (
     <div {...other}>
-      <Typography variant="h5">{project.shortDescription}</Typography>
+      <Typography variant="h5">{project.desc}</Typography>
       <Box sx={{ mt: 3 }}>
         <MarkdownWrapper>
           {project.description && <Markdown children={project.description} />}

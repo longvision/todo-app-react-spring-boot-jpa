@@ -14,7 +14,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { todoApi } from "../../__fake-api__/todo-api";
+import { todoApi } from "../../api/todo-api";
 import { TasksBrowseFilter } from "../../components/tasks/tasks-browse-filter";
 import { ProjectTasks } from "../../components/tasks/project-tasks";
 import { Trash as TrashIcon } from "../../icons/trash";

@@ -20,7 +20,7 @@ import { TaskDetailsStep } from "../../components/tasks/task-details-step";
 import { TaskDescriptionStep } from "../../components/tasks/task-description-step";
 import { TaskProjectStep } from "../../components/tasks/task-project-step";
 import { Check as CheckIcon } from "../../icons/check";
-import { todoApi } from "src/__fake-api__/todo-api";
+import { todoApi } from "src/api/todo-api";
 import NextLink from "next/link";
 import toast from "react-hot-toast";
 import { format } from "date-fns";

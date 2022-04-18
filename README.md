@@ -16,6 +16,14 @@ git clone https://github.com/longvision/todo-app-springboot-react.git
 
 Create the project **.jar** executable file ignoring the test folder.
 
+Enter the backend folder:
+
+```
+cd backend
+```
+
+Run the following command:
+
 ```bash
 mvn clean install -Dmaven.test.skip=true
 ```

@@ -35,8 +35,8 @@ class TodoApi {
     const res = await api.get(`project/${projectId}`);
     return res.data;
   }
-  async updateProject(project: Project): Promise<any> {
-    const res = await api.put(`project/${project.projectId}`, project);
+  async updateProject(project?: Project): Promise<any> {
+    const res = await api.put(`project/${project?.projectId}`, project);
     return res.data;
   }
 

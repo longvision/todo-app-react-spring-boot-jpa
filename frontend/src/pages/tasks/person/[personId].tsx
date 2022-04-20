@@ -22,31 +22,17 @@ import {
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { todoApi } from "../../../api/todo-api";
-import { ProjectOverview } from "../../../components/tasks/project-overview";
 import { Pencil as EditIcon } from "../../../icons/pencil";
 import { CheckCircleOutlined as SaveIcon } from "../../../icons/check-circle-outlined";
-import { ProjectReviews } from "../../../components/tasks/project-reviews";
-import { ProjectSummary } from "../../../components/tasks/project-summary";
-import { ProjectActivity } from "../../../components/tasks/project-activity";
-import { ProjectTeam } from "../../../components/tasks/project-team";
-import { ProjectAssets } from "../../../components/tasks/project-assets";
+
 import { useMounted } from "../../../hooks/use-mounted";
 import type { Project } from "../../../types/project";
-import { getInitials } from "../../../utils/get-initials";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
-const tabs = [
-  { label: "Overview", value: "overview" },
-  { label: "Reviews", value: "reviews" },
-  { label: "Activity", value: "activity" },
-  { label: "Team", value: "team" },
-  { label: "Assets", value: "assets" },
-];
-
 const ProjectDetails: NextPage = () => {
   const isMounted = useMounted();
-  const [project, setProject] = useState<Project>("");
+  const [project, setProject] = useState<Project | undefined>();
   const [editing, setEditing] = useState<boolean>(false);
   const route = useRouter();
 

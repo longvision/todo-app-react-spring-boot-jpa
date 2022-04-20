@@ -1,11 +1,8 @@
 import type { FC } from "react";
 import NextLink from "next/link";
-import { Avatar, Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { CheckCircleOutlined as CheckCircleOutlinedIcon } from "../../icons/check-circle-outlined";
-import { Users as UsersIcon } from "../../icons/users";
-import { Star as StarIcon } from "../../icons/star";
-import { Template as TemplateIcon } from "../../icons/template";
 
 export const HomeHero: FC = (props) => {
   const theme = useTheme();

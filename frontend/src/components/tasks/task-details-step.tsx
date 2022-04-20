@@ -1,17 +1,7 @@
 import { useState } from "react";
 import type { FC } from "react";
 import PropTypes from "prop-types";
-import {
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import { ArrowRight as ArrowRightIcon } from "../../icons/arrow-right";
 
@@ -25,18 +15,6 @@ interface TaskDetailsStepProps {
 
 export const TaskDetailsStep: FC<TaskDetailsStepProps> = (props) => {
   const { onBack, onNext, setTitle, setEndDate, endDate, ...other } = props;
-  // const [tag, setTag] = useState<string>("");
-  // const [tagArray, setTagArray] = useState<string[]>([]);
-  // const [startDate, setStartDate] = useState<Date | null>(
-  //   new Date("2021-09-22T11:41:50")
-  // );
-  // const [endDate, setEndDate] = useState<Date | null>(
-  //   new Date("2022-01-11T12:41:50")
-  // );
-
-  // const handleStartDateChange = (newValue: Date | null): void => {
-  //   setStartDate(newValue);
-  // };
 
   const handleEndDateChange = (newValue: any): void => {
     setEndDate(newValue);

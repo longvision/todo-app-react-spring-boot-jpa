@@ -16,15 +16,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import { ArrowRight as ArrowRightIcon } from "../../icons/arrow-right";
-import { ProjectSummary } from "./project-summary";
 import { Project } from "src/types/project";
 import { getInitials } from "src/utils/get-initials";
 
 interface TaskDetailsStepProps {
   onNext?: () => void;
-  setProjectId?: (projectId: string) => void;
+  setProjectId: (projectId: string) => void;
   projectId: string;
   projects: Project[];
   setPersonId: (personId: string) => void;

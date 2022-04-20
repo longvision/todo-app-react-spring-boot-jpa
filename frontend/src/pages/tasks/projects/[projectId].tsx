@@ -32,7 +32,7 @@ import toast from "react-hot-toast";
 
 const ProjectDetails: NextPage = () => {
   const isMounted = useMounted();
-  const [project, setProject] = useState<Project>("");
+  const [project, setProject] = useState<Project | undefined>();
   const [editing, setEditing] = useState<boolean>(false);
   const route = useRouter();
 

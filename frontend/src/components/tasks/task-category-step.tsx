@@ -15,7 +15,6 @@ interface TaskCategoryStepProps {
 
 export const TaskCategoryStep: FC<TaskCategoryStepProps> = (props) => {
   const { onBack, onNext, typeOptions, setType, type, ...other } = props;
-  // const [type, setType] = useState<string>(typeOptions[1].value);
 
   const handleChange = (newType: string): void => {
     setType(newType);

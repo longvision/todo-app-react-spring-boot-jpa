@@ -1,3 +1,5 @@
+# README ⇒ How to run the project
+
 **Download the project from github repo link:**
 
 using SSH:
@@ -15,14 +17,6 @@ git clone https://github.com/longvision/todo-app-springboot-react.git
 **Run the Backend:**
 
 Create the project **.jar** executable file ignoring the test folder.
-
-Enter the backend folder:
-
-```
-cd backend
-```
-
-Run the following command:
 
 ```bash
 mvn clean install -Dmaven.test.skip=true
@@ -46,7 +40,7 @@ curl http://localhost:8080/projects
 
 **Run the Frontend:**
 
-1. Run yarn install or npm install inside the ./fronend folder. (certify that you have node and npm or yarn installed in your machine)
+1. Run yarn install or npm install inside the ./fronend folder. (\*certify that you have node and npm or yarn installed in your machine)
 
 ```
 yarn install
@@ -56,4 +50,10 @@ yarn install
 
 ```
 yarn dev
+```
+
+1. Access the website at:
+
+```
+http://localhost:3000
 ```

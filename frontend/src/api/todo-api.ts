@@ -3,12 +3,11 @@ import { string } from "prop-types";
 import type { Project } from "../types/project";
 import { api } from "./api";
 
-const now = new Date();
 
 class TodoApi {
   async createProject(
-    name: string | null,
-    description: string | null
+    name: string ,
+    description: string 
   ): Promise<any> {
     return await api.post("/project", {
       name,

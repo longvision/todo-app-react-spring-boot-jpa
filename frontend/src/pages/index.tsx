@@ -18,6 +18,4 @@ const Home: NextPage = () => {
   );
 };
 
-// Home.getLayout = (page) => <MainLayout>{page}</MainLayout>;
-
 export default Home;

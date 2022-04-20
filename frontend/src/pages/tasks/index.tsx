@@ -214,7 +214,6 @@ const Task: NextPage = () => {
                             variant="overline"
                           >
                             Total of {project.tasks.length} tasks
-                            {/* number of total tasks */}
                           </Typography>
                         </Box>
                       </Box>

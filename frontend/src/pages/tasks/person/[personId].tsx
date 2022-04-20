@@ -46,7 +46,7 @@ const tabs = [
 
 const ProjectDetails: NextPage = () => {
   const isMounted = useMounted();
-  const [project, setProject] = useState<Project | null>(null);
+  const [project, setProject] = useState<Project>("");
   const [editing, setEditing] = useState<boolean>(false);
   const route = useRouter();
 

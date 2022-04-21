@@ -81,7 +81,13 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
               textDecoration: task.isDone ? "line-through" : "none",
             }}
           >
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <Box
+              sx={{
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
               <Avatar
                 src={!task.isDone ? task.person.imageUrl : ""}
                 sx={{
@@ -93,7 +99,7 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
               >
                 {getInitials(task.person.fullName)}
               </Avatar>
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ flexDirection: "column", display: "flex" }}>
                 <Typography variant="caption">
                   {task.person.fullName}
                 </Typography>
@@ -101,8 +107,16 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
                   <strong>{task.person.username.toLowerCase()}</strong>
                 </Typography>
               </div>
-            </div>
-            <div>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                width: 325,
+              }}
+            >
               <Typography variant="subtitle1">{task.title}</Typography>
               <Typography color="textSecondary" variant="caption">
                 {task.description || "No description available"}
@@ -110,8 +124,8 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
                   • Dealine on {task.deadline}
                 </Typography>
               </Typography>
-            </div>
-            <div>
+            </Box>
+            <Box sx={{ width: 300 }}>
               <Chip
                 sx={{ mr: 2, height: 1 }}
                 label={task.category}
@@ -140,7 +154,7 @@ export const ProjectTasks: FC<ProjectTasksProps> = (props) => {
               >
                 <TrashIcon fontSize="small" />
               </IconButton>
-            </div>
+            </Box>
           </Box>
           {index !== tasks.length - 1 && <Divider />}
         </Fragment>
